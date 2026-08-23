@@ -1,6 +1,7 @@
 services:
   api:
     build: .
+    image: fastapi-compose-api:v1.0.0 #name and tag image as this
     ports:
       - "8000:8000"
     environment:
