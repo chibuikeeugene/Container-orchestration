@@ -1,0 +1,34 @@
+#Illustrating multiple manifests in a single yaml file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web2-test
+spec:
+  selector:
+    matchLabels:
+      app: web2-test
+  template:
+    metadata:
+      labels:
+        app: web2-test
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+--- #separating resources using this "---"
+apiVersion: v1
+kind: Service
+metadata:
+  name: web2-test-service
+spec:
+  selector:
+    app: web2-test
+  ports:
+  - protocol: TCP
+    name: web2-test-service-port
+    port: 80
+    targetPort: 80
+  type: ClusterIP
+
