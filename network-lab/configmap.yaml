@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: api-config
+
+data:
+  APP_ENV: prod
+  LOG_LEVEL: info
+  APP_NAME: kubernetes-lab
+  CACHE_HOST: redis-service
