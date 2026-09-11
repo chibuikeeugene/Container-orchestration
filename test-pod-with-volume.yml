@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: emptydir-demo
+  name: shared-volume-demo
 spec:
   containers:
   - name: writer
@@ -12,12 +12,30 @@ spec:
     args: 
       - |
         while true; do
-          date >> /data/output.txt
+          date >> /shared/output.txt
           sleep 5
         done
     volumeMounts:
-      - name: shared-data
-        mountPath: /data
+      - name: shared
+        mountPath: /shared
+
+  - name: reader
+    image: busybox:1.36
+    command:
+      - sh
+      - -c
+
+    args: 
+      - |
+        while true;
+        do
+          cat /shared/output.txt
+          sleep 5
+        done
+    volumeMounts:
+      - name: shared
+        mountPath: /shared
+    
   volumes:
-    - name: shared-data
+    - name: shared
       emptyDir: {}
