@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-probe
+spec:
+  selector:
+    matchLabels:
+      app: web-probe-pod
+  template:
+    metadata:
+      labels:
+        app: web-probe-pod
+    spec:
+      containers:
+      - name: nginx-probe
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+            
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+
+          initialDelaySeconds: 10
+          periodSeconds: 5
+
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+
+          initialDelaySeconds: 20
+          periodSeconds: 5
+        
+        startupProbe:
+          httpGet:
+            path: /
+            port: 80
+
+          failureThreshold: 30
+          initialDelaySeconds: 10
+
+  
