@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: crash-demo
+
+spec:
+  containers:
+    - name: crash
+      image: busybox:1.36
+
+      command:
+        - sh
+        - -c
+
+      args:
+        - |
+          echo "Application starting"
+          sleep 2
+          exit 1

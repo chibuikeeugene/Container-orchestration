@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  nodeSelector:
+    workload: general
+  containers:
+  - name: mypod-nginx
+    image: nginx:alpine
+

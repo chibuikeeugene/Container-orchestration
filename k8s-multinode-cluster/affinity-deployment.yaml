@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affinity-demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: affinity-demo
+  template:
+    metadata:
+      labels:
+        app: affinity-demo
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: workload
+                    operator: In
+                    values: 
+                      - general
+                      - database
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        
