@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector: 
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values: 
+                        - frontend
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        
