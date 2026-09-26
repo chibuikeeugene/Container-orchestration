@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api
+  namespace: development
+spec:
+  serviceAccountName: app-reader
+  containers:
+  - name: api
+    image: nginx:alpine
