@@ -1,0 +1,4 @@
+replicaCount: 4
+
+image:
+  tag: alpine
